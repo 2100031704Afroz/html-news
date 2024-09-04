@@ -1,14 +1,12 @@
-// Dynamic properties for API
 const categoryElement = document.getElementById('category');
 const selectedCategory = categoryElement ? categoryElement.value : 'general';
 const props = {
     country: 'in',  
-    category: selectedCategory|| 'technology',  
+    category: selectedCategory|| 'general',  
     apiKey: 'a40b7d37953f475a97117faf032fb0c7',  
     pageSize: 12, 
 };
 
-// Pagination settings
 let page = 1;
 
 const newsContainer = document.getElementById('news-container');
@@ -16,7 +14,6 @@ const categorySelect = document.getElementById('category');
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
-// Fetch news from the API with dynamic URL
 async function fetchNews() {
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     
@@ -56,7 +53,6 @@ function displayNews(articles) {
     });
 }
 
-// Update pagination controls based on the total results
 function updatePaginationControls(totalResults) {
     prevButton.disabled = page <= 1;
     nextButton.disabled = page >= Math.ceil(totalResults / props.pageSize);
