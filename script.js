@@ -1,6 +1,6 @@
 // Dynamic properties for API
 const categoryElement = document.getElementById('category');
-const selectedCategory = categoryElement ? categoryElement.value : 'technology';
+const selectedCategory = categoryElement ? categoryElement.value : 'general';
 const props = {
     country: 'in',  
     category: selectedCategory|| 'technology',  
