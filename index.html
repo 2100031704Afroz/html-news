@@ -23,6 +23,8 @@
                 <option value="entertainment">Entertainment</option>
                 <option value="health">Health</option>
                 <option value="science">Science</option>
+                <option value="world">World</option>
+                <option value="nation">Nation</option>
             </select>
         </div>
         
@@ -34,91 +36,6 @@
             <button id="next-button">Next</button>
         </div>
     </main>
-    <!-- <script src="script.js"></script> -->
-     <script>
-        const categoryElement = document.getElementById('category');
-const selectedCategory = categoryElement ? categoryElement.value : 'general';
-const props = {
-    country: 'in',  
-    category: selectedCategory|| 'general',  
-    apiKey: 'a40b7d37953f475a97117faf032fb0c7',  
-    pageSize: 12, 
-};
-
-let page = 1;
-
-const newsContainer = document.getElementById('news-container');
-const categorySelect = document.getElementById('category');
-const prevButton = document.getElementById('prev-button');
-const nextButton = document.getElementById('next-button');
-
-async function fetchNews() {
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-    
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        displayNews(data.articles);
-        updatePaginationControls(data.totalResults);
-    } catch (error) {
-        console.error('Error fetching the news:', error);
-    }
-}
-
-// Display the news articles on the page
-function displayNews(articles) {
-    newsContainer.innerHTML = '';
-    articles.forEach(article => {
-        const newsArticle = document.createElement('div');
-        newsArticle.className = 'news-article';
-
-        // Use a fallback image if urlToImage is null
-        const imageUrl = article.urlToImage ? article.urlToImage : 'https://via.placeholder.com/300x200?text=No+Image';
-        
-        const publishedDate = new Date(article.publishedAt);
-        const formattedDate = `${publishedDate.toLocaleDateString()} ${publishedDate.toLocaleTimeString()}`;
-        // Construct article content with proper fallbacks
-        newsArticle.innerHTML = `
-            <img src="${imageUrl}" alt="${article.title}">
-            <a style="text-decoration: none; color:black;" href="${article.url}" target="_blank">
-                <h2>${article.title}</h2>
-            </a>
-            <h4>Published on: ${formattedDate}</h4>
-            <a style="color:black;" href="${article.url}" target="_blank">Read more-></a>
-        `;
-        
-        newsContainer.appendChild(newsArticle);
-    });
-}
-
-function updatePaginationControls(totalResults) {
-    prevButton.disabled = page <= 1;
-    nextButton.disabled = page >= Math.ceil(totalResults / props.pageSize);
-}
-
-// Handle category change
-categorySelect.addEventListener('change', (event) => {
-    props.category = event.target.value;
-    page = 1; // Reset to first page when category changes
-    fetchNews();
-});
-
-// Handle pagination
-prevButton.addEventListener('click', () => {
-    if (page > 1) {
-        page--;
-        fetchNews();
-    }
-});
-
-nextButton.addEventListener('click', () => {
-    page++;
-    fetchNews();
-});
-
-// Initial fetch
-fetchNews();
-
-     </script>
+    <script src="script.js"></script> 
 </body>
 </html>
